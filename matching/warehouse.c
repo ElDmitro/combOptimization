@@ -1,7 +1,6 @@
 #include "glpk.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 
 void readWarehouseStats(int *wSize, int *cSize,
@@ -236,10 +235,11 @@ int main(int argc, char *argv[]) {
     // MIP PARAMS INIT
     glp_init_iocp(&iocp);
     iocp.msg_lev = GLP_MSG_OFF;
-    iocp.br_tech = GLP_BR_MFV; /* most fractional variable */
-    iocp.bt_tech = GLP_BT_BLB; /* best local bound */
+    iocp.br_tech = GLP_BR_DTH; /* most fractional variable */
+    iocp.bt_tech = GLP_BT_BPH; /* best local bound */
     iocp.sr_heur = GLP_OFF; /* disable simple rounding heuristic */
     iocp.gmi_cuts = GLP_ON; /* enable Gomory cuts */
+    iocp.mir_cuts = GLP_ON;
     iocp.presolve = GLP_ON; /* LP-relaxation pre-solution */
 
     glp_intopt(problem, &iocp);
